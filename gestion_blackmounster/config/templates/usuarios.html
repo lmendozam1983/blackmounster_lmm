@@ -16,8 +16,10 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Staff Status</th>
+                    {% if user.is_authenticated and perms.producto.editar_usuario %}
                     <th scope="col">Editar</th>
                     <th scope="col">Eliminar</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -29,20 +31,24 @@
                         <td>{{ usuario.first_name }}</td>
                         <td>{{ usuario.last_name }}</td>
                         <td>{{ usuario.is_staff }}</td>
+                        {% if user.is_authenticated and perms.producto.editar_usuario %}
                         <td>
                             <a href="/inventario/editar_usuario/{{ usuario.id }}" class="btn btn-warning btn-sm">Editar</a>
                         </td>
                         <td>
                             <a href="/inventario/eliminar_usuario/{{ usuario.id }}" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    {% if user.is_authenticated and perms.producto.editar_usuario %}
     <div class="text-center mt-4">
         <a href="{% url 'agregar_usuario' %}" class="btn btn-success btn-lg">Agregar Usuario</a>
     </div>
+    {% endif %}
 </div>
 {% include 'footer.html' %}
 {% endblock %}

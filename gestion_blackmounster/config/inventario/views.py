@@ -65,6 +65,8 @@ def registroView(request):
     
     return render(request, 'register.html', {'register_form': form})
 
+
+@login_required(login_url='/inventario/login/')
 def peliculasView(request):
     peliculas = Pelicula.objects.all()
     return render(request, 'peliculas.html', {'peliculas': peliculas})
@@ -158,6 +160,13 @@ def arriendo_peliculasView(request):
 
     return render(request, 'arriendo_pelicula.html', {'form': form})
 
+@login_required
 def listado_transaccionesView(request):
-    transacciones = Transaccion.objects.all()
+    if request.user.is_staff:  # Verifica si el usuario es un administrador
+        # Si es administrador, muestra todas las transacciones
+        transacciones = Transaccion.objects.all()
+    else:
+        # Si no es administrador, muestra solo las transacciones del usuario autenticado
+        transacciones = Transaccion.objects.filter(usuario=request.user)
+
     return render(request, 'transacciones.html', {'transacciones': transacciones})

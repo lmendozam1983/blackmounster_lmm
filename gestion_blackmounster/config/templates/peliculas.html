@@ -18,8 +18,10 @@
                     <th scope="col">Precio Arriendo</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Detalle</th>
+                    {% if user.is_authenticated and perms.producto.editar_peliculas %}
                     <th scope="col">Editar</th>
                     <th scope="col">Eliminar</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -35,20 +37,24 @@
                         <td>
                             <a href="/inventario/detalle_pelicula/{{ pelicula.id }}" class="btn btn-info btn-sm">Detalle</a>
                         </td>
+                        {% if user.is_authenticated and perms.producto.editar_peliculas %}
                         <td>
                             <a href="/inventario/editar_pelicula/{{ pelicula.id }}" class="btn btn-warning btn-sm">Editar</a>
                         </td>
                         <td>
                             <a href="/inventario/eliminar_pelicula/{{ pelicula.id }}" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    {% if user.is_authenticated and perms.producto.editar_peliculas %}
     <div class="text-center mt-4">
         <a href="{% url 'agregar_pelicula' %}" class="btn btn-success btn-lg">Agregar Película</a>
     </div>
+    {% endif %}
 </div>
 {% include 'footer.html' %}
 {% endblock %}

@@ -136,7 +136,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_URL = '/dispositivo/templates/registration/login/'
+LOGIN_URL = '/inventario/login/'
 LOGIN_REDIRECT_URL = '/'  # Redirige después de iniciar sesión
 
 # settings.py

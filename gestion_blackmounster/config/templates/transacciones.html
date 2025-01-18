@@ -3,35 +3,72 @@
 {% block content %}
 
 {% include 'menu.html' %}
-    <div class="p-3">
-        <h2>Listado de Transacciones</h2>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Usuario</th>
-                <th scope="col">Película</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Fecha Inicio</th>
-                <th scope="col">Fecha Término</th>
-                <th scope="col">Estado</th>
-            </tr>
-            </thead>
-        {%for transaccion in transacciones %}
-            <tbody>
-                    <tr>
-                    <th scope="row">{{transaccion.id}}</th>
-                    <td>{{transaccion.usuario}}</td>
-                    <td>{{transaccion.pelicula}}</td>
-                    <td>{{transaccion.tipo}}</td>
-                    <td>{{transaccion.fecha_inicio}}</td>
-                    <td>{{transaccion.fecha_termino}}</td>
-                    <td>{{transaccion.estado}}</td>
-                    </tr>
-            </tbody>
-        {%endfor%}
-        </table>
-        <a href="/biblioteca/prestamo_libros/">Nuevo prestamo</a>
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h2 class="mb-0">Listado de Transacciones</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Película</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Fecha Inicio</th>
+                            <th scope="col">Fecha Término</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaccion in transacciones %}
+                            <tr>
+                                <th scope="row">{{ transaccion.id }}</th>
+                                <td>{{ transaccion.usuario }}</td>
+                                <td>{{ transaccion.pelicula }}</td>
+                                <td><b>{{ transaccion.tipo }}</b></td>
+                                <td>{{ transaccion.fecha_inicio|date:"d M Y H:i" }}</td>
+                                <td>
+                                    {% if transaccion.fecha_termino %}
+                                        {{ transaccion.fecha_termino|date:"d M Y H:i" }}
+                                    {% else %}
+                                        <span class="text-muted">Pendiente</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge 
+                                        {% if transaccion.estado == 'Activo' %}
+                                            bg-success
+                                        {% elif transaccion.estado == 'Finalizado' %}
+                                            bg-secondary
+                                        {% else %}
+                                            bg-warning text-dark
+                                        {% endif %}">
+                                        {{ transaccion.estado }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">
+                                    No hay transacciones registradas.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if user.is_authenticated and perms.producto.editar_usuario %}
+                <div class="d-flex justify-content-end">
+                    <a href="/inventario/arriendo_pelicula/" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Nueva Transacción
+                    </a>
+                </div>
+            {% endif %}
+        </div>
     </div>
-    {% include 'footer.html' %}
+</div>
+{% include 'footer.html' %}
 {% endblock %}

@@ -17,19 +17,19 @@
                     <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'index' %}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'listado' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'lista_peliculas' %}">Películas</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'lista_peliculas' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'lista_peliculas' %}">Películas</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'ingresar' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'lista_usuarios' %}">Usuarios</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'lista_usuarios' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'lista_usuarios' %}">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'registrar_prestamo' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'lista_transacciones' %}">Ver Transacciones</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'lista_transacciones' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'lista_transacciones' %}">Ver Transacciones</a>
                 </li>
                 {% endif %}
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated and perms.producto.editar_peliculas %}
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'registrar_prestamo' %}active{% endif %} btn btn-outline-success text-white ms-2" href="/admin/">Admin</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'admin' %}active{% endif %} btn btn-outline-success text-white ms-2" href="/admin/">Admin</a>
                 </li>
                 {% endif %}
             </ul>
