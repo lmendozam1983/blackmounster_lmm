@@ -19,10 +19,12 @@ class CustomUserCreationForm(UserCreationForm):
             return email
         
 
-class UserForm(UserCreationForm):
+class RegistroUsuarioForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
     class Meta:
         model = User
-        fields = ['username', 'password1','password2']
+        fields = ("username", "email", "password1", "password2")
 
 class SignInForm(forms.Form):
     username = forms.CharField(max_length=150, required=True, label="Usuario")
