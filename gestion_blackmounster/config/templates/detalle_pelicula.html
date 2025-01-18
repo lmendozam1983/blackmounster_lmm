@@ -16,10 +16,19 @@
                     <h2 class="card-text text-left text-muted mb-4">Stock: <b>{{ peliculas.stock }}</b></h2>
                     <div class="text-center">
                         <a href="/inventario/arriendo_pelicula/{{ pelicula.id }}" class="btn btn-success btn-lg">
-                            <i class="bi bi-bookmark-plus"></i> Comprar
+                            <i class="bi bi-cart-plus"></i> Comprar
                         </a>
                         <a href="/inventario/arriendo_pelicula/{{ pelicula.id }}" class="btn btn-primary btn-lg">
-                            <i class="bi bi-bookmark-plus"></i> Arrendar
+                            <i class="bi bi-bag-plus"></i> Arrendar
+                        </a>
+                        {% if user.is_authenticated and perms.producto.editar_peliculas %}
+                        <a href="/inventario/editar_pelicula/{{ pelicula.id }}" class="btn btn-warning btn-lg">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a href="/inventario/eliminar_pelicula/{{ pelicula.id }}" class="btn btn-danger btn-lg">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                        {% endif %}
                         </a>
                     </div>
                 </div>

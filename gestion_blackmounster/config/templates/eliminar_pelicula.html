@@ -2,7 +2,7 @@
 {% block content %}
 {% include 'menu.html' %}
 
-<!-- Modal de confirmación -->
+
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -21,7 +21,6 @@
     </div>
 </div>
 
-<!-- Enlace para abrir el modal -->
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card text-center" style="width: 24rem;">
         <img src="https://i.pinimg.com/736x/bc/41/3e/bc413e725a0597e9ba2b1767cdca166b.jpg" class="card-img-top" alt="Imagen descriptiva">
@@ -43,13 +42,11 @@
 
 
 
-<!-- Formulario oculto para realizar la eliminación -->
 <form method="POST" action="{% url 'eliminar_pelicula' pelicula.pk %}" id="delete-form" style="display: none;">
     {% csrf_token %}
 </form>
 
 <script>
-    // Cuando se confirma la eliminación, se envía el formulario
     document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
         document.getElementById('delete-form').submit();
     });

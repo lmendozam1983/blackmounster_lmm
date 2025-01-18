@@ -50,7 +50,15 @@ class PeliculaForm(forms.ModelForm):
 class TransaccionForm(forms.ModelForm):
     class Meta:
         model = Transaccion
-        fields = '__all__'
+        exclude = ['usuario']  
+
+    def save(self, commit=True, user=None):
+        transaccion = super().save(commit=False)
+        if user:
+            transaccion.usuario = user  #
+        if commit:
+            transaccion.save()
+        return transaccion
         
 class UserForm(forms.ModelForm):
     class Meta:

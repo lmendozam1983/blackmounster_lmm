@@ -71,10 +71,12 @@ def peliculasView(request):
     peliculas = Pelicula.objects.all()
     return render(request, 'peliculas.html', {'peliculas': peliculas})
 
+@login_required
 def detalle_peliculasView(request, pk):
     peliculas = get_object_or_404(Pelicula, pk=pk)
     return render(request, 'detalle_pelicula.html', {'peliculas': peliculas})
 
+@login_required
 def editar_peliculasView(request, pk):
     peliculas = get_object_or_404(Pelicula, pk=pk)
     if request.method == 'POST':
@@ -86,10 +88,12 @@ def editar_peliculasView(request, pk):
         form = PeliculaForm(instance=peliculas)
     return render(request, 'editar_pelicula.html', {'form': form})
 
+@login_required
 def eliminar_peliculasView(request, pk):
     pelicula = get_object_or_404(Pelicula, pk=pk)
     return render(request, 'eliminar_pelicula.html', {'pelicula': pelicula})
 
+@login_required
 def agregar_peliculasView(request):
     if request.method == 'POST':
         form = PeliculaForm(request.POST)
@@ -100,10 +104,12 @@ def agregar_peliculasView(request):
         form = PeliculaForm()
     return render(request, 'agregar_pelicula.html', {'form': form})
 
+@login_required
 def usuariosView(request):
     usuarios = User.objects.all()
     return render(request, 'usuarios.html', {'usuarios': usuarios})
 
+@login_required
 def editar_usuariosView(request, pk):
     usuarios = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -115,10 +121,12 @@ def editar_usuariosView(request, pk):
         form = UserForm(instance=usuarios)
     return render(request, 'editar_usuario.html', {'form': form})
 
+@login_required
 def eliminar_usuariosView(request, pk):
     usuario = get_object_or_404(Pelicula, pk=pk)
     return render(request, 'eliminar_usuario.html', {'usuario': usuario})
 
+@login_required
 def agregar_usuariosView(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -129,44 +137,30 @@ def agregar_usuariosView(request):
         form = UserForm()
     return render(request, 'agregar_usuario.html', {'form': form})
 
-
+@login_required
 def arriendo_peliculasView(request):
     if request.method == 'POST':
         form = TransaccionForm(request.POST)
         if form.is_valid():
-            # Obtener los datos del formulario y crear el objeto Transaccion
             prestamo = form.save(commit=False)
             prestamo.usuario = request.user
-
-            # Obtener la película relacionada
             pelicula = prestamo.pelicula
-
-            # Verificar si hay stock disponible
             if pelicula.stock <= 0:
                 messages.error(request, f"La película {pelicula.titulo} no tiene stock disponible para arriendo.")
                 return redirect('lista_peliculas')
-
-            # Si hay stock, crear la transacción
             prestamo.save()
-
-            # Descontar 1 unidad del stock de la película
             pelicula.stock -= 1
             pelicula.save()
-
             messages.success(request, f"Préstamo de la película {pelicula.titulo} creado correctamente.")
             return redirect('lista_peliculas')
     else:
         form = TransaccionForm()
-
     return render(request, 'arriendo_pelicula.html', {'form': form})
 
 @login_required
 def listado_transaccionesView(request):
-    if request.user.is_staff:  # Verifica si el usuario es un administrador
-        # Si es administrador, muestra todas las transacciones
+    if request.user.is_staff:  
         transacciones = Transaccion.objects.all()
     else:
-        # Si no es administrador, muestra solo las transacciones del usuario autenticado
         transacciones = Transaccion.objects.filter(usuario=request.user)
-
     return render(request, 'transacciones.html', {'transacciones': transacciones})
