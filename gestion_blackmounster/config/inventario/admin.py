@@ -26,7 +26,7 @@ class PeliculaAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'director', 'genero', 'precio_compra', 'precio_arriendo', 'stock')
     search_fields = ('titulo', 'director', 'genero')
     list_filter = ('titulo', 'stock')
-    ordering = ('titulo', 'id')
+    ordering = ('id', 'titulo')
     
 @admin.register(Transaccion)
 class TransaccionAdmin(admin.ModelAdmin):

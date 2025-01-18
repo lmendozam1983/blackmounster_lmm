@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="https://w7.pngwing.com/pngs/512/949/png-transparent-warehouse-architectural-engineering-logistics-building-warehouse-miscellaneous-freight-transport-rectangle-thumbnail.png" alt="Bootstrap" width="40" height="34"></a>
-        <a class="navbar-brand text-white fw-bold" href="#">BLACKMOUNSTER</a>
+        <a class="navbar-brand text-white fw-bold" href="{% url 'index' %}">BLACKMOUNSTER</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon" style="background-color: #eaecee;"></span>
@@ -14,10 +14,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %} btn btn-outline-success text-white ms-2" href="#">Inicio</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'index' %}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'listado' %}active{% endif %} btn btn-outline-success text-white ms-2" href="#">Listado dispositivos</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'listado' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'lista_peliculas' %}">Películas</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
@@ -53,10 +53,10 @@
                             <b>Hola, {{ user.username }}</b>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="">Cerrar sesión</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
                         </ul>
                     {% else %}
-                        <button class="btn btn-sm btn-outline-success text-white ms-2" type="button" onclick="window.location.href='#'">
+                        <button class="btn btn-sm btn-outline-success text-white ms-2" type="button" onclick="window.location.href='{% url 'login' %}'">
                             <i class="fas fa-sign-in-alt"></i> Iniciar
                         </button>
                     {% endif %}

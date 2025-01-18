@@ -14,7 +14,8 @@ from django.contrib.auth.decorators import user_passes_test
 
 
 # 
-from .forms import RegistroUsuarioForm 
+from .forms import RegistroUsuarioForm, PeliculaForm
+from .models import Transaccion, Pelicula
 
 # Create your views here.
 
@@ -41,3 +42,48 @@ def logoutView(request):
     logout(request)
     messages.info(request, "Se ha cerrado la sesión satisfactoriamente.")
     return HttpResponseRedirect('/') 
+
+def registroView(request): 
+    if request.method == "POST": 
+        form = RegistroUsuarioForm(request.POST) 
+        if form.is_valid(): 
+            content_type = ContentType.objects.get_for_model(Transaccion) 
+            visualizar_listado = Permission.objects.get(
+                codename='visualizar_listado', 
+                content_type=content_type
+            ) 
+            user = form.save() 
+            user.user_permissions.add(visualizar_listado) 
+            login(request, user)
+            next_url = '/'
+            messages.success(request, "Registrado satisfactoriamente.") 
+            return HttpResponseRedirect('/')
+        else:
+            messages.error(request, "Registro inválido. Algunos datos son incorrectos.") 
+    else:
+        form = RegistroUsuarioForm()  
+    
+    return render(request, 'register.html', {'register_form': form})
+
+def peliculasView(request):
+    peliculas = Pelicula.objects.all()
+    return render(request, 'peliculas.html', {'peliculas': peliculas})
+
+def detalle_peliculasView(request, pk):
+    peliculas = get_object_or_404(Pelicula, pk=pk)
+    return render(request, 'detalle_pelicula.html', {'peliculas': peliculas})
+
+def editar_peliculasView(request, pk):
+    peliculas = get_object_or_404(Pelicula, pk=pk)
+    if request.method == 'POST':
+        form = PeliculaForm(request.POST, instance=peliculas)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_peliculas')
+    else:
+        form = PeliculaForm(instance=peliculas)
+    return render(request, 'editar_pelicula.html', {'form': form})
+
+def eliminar_peliculasView(request, pk):
+    pelicula = get_object_or_404(Pelicula, pk=pk)
+    return render(request, 'eliminar_pelicula.html', {'pelicula': pelicula})

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% include 'menu.html' %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg rounded">
+                <div class="card-body">
+                    <h1 class="card-title text-left mb-4">Película: <b>{{ peliculas.titulo }}</b></h1>
+                    <h2 class="card-text text-left text-muted mb-4">Director: <b>{{ peliculas.director }}</b></h2>
+                    <h2 class="card-text text-left text-muted mb-4">Género: <b>{{ peliculas.genero }}</b></h2>
+                    <h2 class="card-text text-left text-muted mb-4">Precio: <b>{{ peliculas.precio_compra }}</b></h2>
+                    <h2 class="card-text text-left text-muted mb-4">Arriendo: <b>{{ peliculas.precio_arriendo }}</b></h2>
+                    <h2 class="card-text text-left text-muted mb-4">Stock: <b>{{ peliculas.stock }}</b></h2>
+                    <div class="text-center">
+                        <a href="/biblioteca/prestamos/usuario/{{ pelicula.id }}" class="btn btn-success btn-lg">
+                            <i class="bi bi-bookmark-plus"></i> Comprar
+                        </a>
+                        <a href="/biblioteca/prestamos/usuario/{{ pelicula.id }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-bookmark-plus"></i> Arrendar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

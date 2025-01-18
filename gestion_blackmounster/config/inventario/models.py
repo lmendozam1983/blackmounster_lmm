@@ -31,6 +31,15 @@ class Transaccion(models.Model):
         choices=[('Completado', 'completado'), ('Pendiente', 'pendiente')],
         max_length=50
     )
+    class Meta:
+        verbose_name = "Inventario"
+        verbose_name_plural = "Inventarios"
+        permissions = (
+                ("development", "Puede desarrollar"),
+                ("scrum_master", "Es Scrum Master"),
+                ("visualizar_listado", "visualizar listado"),
+                ("superuser", "superuser" )
+        )
     
     def __str__(self):
         return f"{self.usuario} - {self.pelicula}"
