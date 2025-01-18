@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load bootstrap5 %}
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include "menu.html" %}
+    <div class="container text-center mt-5">
+        <h1 class="display-4 font-weight-bold text-success mb-4">Hola, soy el dueño de Blackmounster!!!</h1>
+        <img src="https://pbs.twimg.com/profile_images/1631849167156035584/V5mclIBY_400x400.jpg" alt="Gato RAmirez" class="mx-auto d-block rounded-circle shadow-lg mb-4" style="max-width: 250px;" />
+        <p class="lead text-muted">Bienvenidos a Blackmounster. ¡Estamos listos para servirte!</p>
+    </div>
+    
+    
+    {% include 'footer.html' %}
+    {% endblock %} 
+</body>
+</html>
