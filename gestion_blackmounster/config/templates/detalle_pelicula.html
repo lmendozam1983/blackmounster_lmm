@@ -15,10 +15,10 @@
                     <h2 class="card-text text-left text-muted mb-4">Arriendo: <b>{{ peliculas.precio_arriendo }}</b></h2>
                     <h2 class="card-text text-left text-muted mb-4">Stock: <b>{{ peliculas.stock }}</b></h2>
                     <div class="text-center">
-                        <a href="/biblioteca/prestamos/usuario/{{ pelicula.id }}" class="btn btn-success btn-lg">
+                        <a href="/inventario/arriendo_pelicula/{{ pelicula.id }}" class="btn btn-success btn-lg">
                             <i class="bi bi-bookmark-plus"></i> Comprar
                         </a>
-                        <a href="/biblioteca/prestamos/usuario/{{ pelicula.id }}" class="btn btn-primary btn-lg">
+                        <a href="/inventario/arriendo_pelicula/{{ pelicula.id }}" class="btn btn-primary btn-lg">
                             <i class="bi bi-bookmark-plus"></i> Arrendar
                         </a>
                     </div>
@@ -27,5 +27,5 @@
         </div>
     </div>
 </div>
-
+{% include 'footer.html' %}
 {% endblock %}

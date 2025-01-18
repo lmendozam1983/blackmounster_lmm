@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+
 {% load crispy_forms_tags %}
+
 {% block content %}
 
 {% include 'menu.html' %}
 <div class="container p-5">
-    <h1>Agregar Usuario</h1>
+    <h1>Registrar Prestamo</h1>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
@@ -13,3 +15,4 @@
 </div>
 {% include 'footer.html' %}
 {% endblock %}
+

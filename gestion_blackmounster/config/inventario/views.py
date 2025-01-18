@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 
 # 
-from .forms import RegistroUsuarioForm, PeliculaForm, UserForm
+from .forms import RegistroUsuarioForm, PeliculaForm, UserForm, TransaccionForm
 from .models import Transaccion, Pelicula
 
 # Create your views here.
@@ -126,3 +126,38 @@ def agregar_usuariosView(request):
     else:
         form = UserForm()
     return render(request, 'agregar_usuario.html', {'form': form})
+
+
+def arriendo_peliculasView(request):
+    if request.method == 'POST':
+        form = TransaccionForm(request.POST)
+        if form.is_valid():
+            # Obtener los datos del formulario y crear el objeto Transaccion
+            prestamo = form.save(commit=False)
+            prestamo.usuario = request.user
+
+            # Obtener la película relacionada
+            pelicula = prestamo.pelicula
+
+            # Verificar si hay stock disponible
+            if pelicula.stock <= 0:
+                messages.error(request, f"La película {pelicula.titulo} no tiene stock disponible para arriendo.")
+                return redirect('lista_peliculas')
+
+            # Si hay stock, crear la transacción
+            prestamo.save()
+
+            # Descontar 1 unidad del stock de la película
+            pelicula.stock -= 1
+            pelicula.save()
+
+            messages.success(request, f"Préstamo de la película {pelicula.titulo} creado correctamente.")
+            return redirect('lista_peliculas')
+    else:
+        form = TransaccionForm()
+
+    return render(request, 'arriendo_pelicula.html', {'form': form})
+
+def listado_transaccionesView(request):
+    transacciones = Transaccion.objects.all()
+    return render(request, 'transacciones.html', {'transacciones': transacciones})
