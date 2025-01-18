@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 
 # 
-from .forms import RegistroUsuarioForm, PeliculaForm
+from .forms import RegistroUsuarioForm, PeliculaForm, UserForm
 from .models import Transaccion, Pelicula
 
 # Create your views here.
@@ -98,3 +98,31 @@ def agregar_peliculasView(request):
         form = PeliculaForm()
     return render(request, 'agregar_pelicula.html', {'form': form})
 
+def usuariosView(request):
+    usuarios = User.objects.all()
+    return render(request, 'usuarios.html', {'usuarios': usuarios})
+
+def editar_usuariosView(request, pk):
+    usuarios = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=usuarios)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_usuarios')
+    else:
+        form = UserForm(instance=usuarios)
+    return render(request, 'editar_usuario.html', {'form': form})
+
+def eliminar_usuariosView(request, pk):
+    usuario = get_object_or_404(Pelicula, pk=pk)
+    return render(request, 'eliminar_usuario.html', {'usuario': usuario})
+
+def agregar_usuariosView(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_usuarios')
+    else:
+        form = UserForm()
+    return render(request, 'agregar_usuario.html', {'form': form})

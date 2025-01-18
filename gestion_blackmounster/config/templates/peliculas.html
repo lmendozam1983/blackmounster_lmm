@@ -29,8 +29,8 @@
                         <td>{{ pelicula.titulo }}</td>
                         <td>{{ pelicula.director }}</td>
                         <td>{{ pelicula.genero }}</td>
-                        <td>${{ pelicula.precio_compra }}</td>
-                        <td>${{ pelicula.precio_arriendo }}</td>
+                        <td><b>$</b>{{ pelicula.precio_compra }}</td>
+                        <td><b>$</b>{{ pelicula.precio_arriendo }}</td>
                         <td>{{ pelicula.stock }}</td>
                         <td>
                             <a href="/inventario/detalle_pelicula/{{ pelicula.id }}" class="btn btn-info btn-sm">Detalle</a>

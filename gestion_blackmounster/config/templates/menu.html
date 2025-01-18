@@ -21,7 +21,7 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'ingresar' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'agregar_pelicula' %}">Agregar Película</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'ingresar' %}active{% endif %} btn btn-outline-success text-white ms-2" href="{% url 'lista_usuarios' %}">Usuarios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.resolver_match.url_name == 'registrar_prestamo' %}active{% endif %} btn btn-outline-success text-white ms-2" href="#">Realizar Préstamo</a>
