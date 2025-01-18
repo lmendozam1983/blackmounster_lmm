@@ -87,3 +87,14 @@ def editar_peliculasView(request, pk):
 def eliminar_peliculasView(request, pk):
     pelicula = get_object_or_404(Pelicula, pk=pk)
     return render(request, 'eliminar_pelicula.html', {'pelicula': pelicula})
+
+def agregar_peliculasView(request):
+    if request.method == 'POST':
+        form = PeliculaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_peliculas')
+    else:
+        form = PeliculaForm()
+    return render(request, 'agregar_pelicula.html', {'form': form})
+
