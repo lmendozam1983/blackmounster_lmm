@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 # 
 from .forms import RegistroUsuarioForm, PeliculaForm, UserForm, TransaccionForm
-from .models import Transaccion, Pelicula
+from .models import Transaccion, Pelicula, User
 
 # Create your views here.
 
@@ -91,7 +91,11 @@ def editar_peliculasView(request, pk):
 @login_required
 def eliminar_peliculasView(request, pk):
     pelicula = get_object_or_404(Pelicula, pk=pk)
+    if request.method == "POST":
+        pelicula.delete()  
+        return redirect('lista_peliculas') 
     return render(request, 'eliminar_pelicula.html', {'pelicula': pelicula})
+
 
 @login_required
 def agregar_peliculasView(request):
@@ -121,10 +125,15 @@ def editar_usuariosView(request, pk):
         form = UserForm(instance=usuarios)
     return render(request, 'editar_usuario.html', {'form': form})
 
+
 @login_required
 def eliminar_usuariosView(request, pk):
-    usuario = get_object_or_404(Pelicula, pk=pk)
+    usuario = get_object_or_404(User, pk=pk)
+    if request.method == "POST":
+        usuario.delete()  
+        return redirect('lista_usuarios')  
     return render(request, 'eliminar_usuario.html', {'usuario': usuario})
+
 
 @login_required
 def agregar_usuariosView(request):
