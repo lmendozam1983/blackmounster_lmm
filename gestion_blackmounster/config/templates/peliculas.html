@@ -6,49 +6,30 @@
 
 <div class="container py-4">
     <h2 class="text-center mb-4">Lista de Películas</h2>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Director</th>
-                    <th scope="col">Género</th>
-                    <th scope="col">Precio Compra</th>
-                    <th scope="col">Precio Arriendo</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Detalle</th>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for pelicula in peliculas %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pelicula.titulo }}</h5>
+                    <p class="card-text"><strong>Director:</strong> {{ pelicula.director }}</p>
+                    <p class="card-text"><strong>Género:</strong> {{ pelicula.genero }}</p>
+                    <p class="card-text"><strong>Precio Compra:</strong> ${{ pelicula.precio_compra }}</p>
+                    <p class="card-text"><strong>Precio Arriendo:</strong> ${{ pelicula.precio_arriendo }}</p>
+                    <p class="card-text"><strong>Stock:</strong> {{ pelicula.stock }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="/inventario/detalle_pelicula/{{ pelicula.id }}" class="btn btn-info btn-sm">Detalle</a>
                     {% if user.is_authenticated and perms.producto.editar_peliculas %}
-                    <th scope="col">Editar</th>
-                    <th scope="col">Eliminar</th>
+                    <div>
+                        <a href="/inventario/editar_pelicula/{{ pelicula.id }}" class="btn btn-warning btn-sm me-2">Editar</a>
+                        <a href="/inventario/eliminar_pelicula/{{ pelicula.id }}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </div>
                     {% endif %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for pelicula in peliculas %}
-                    <tr>
-                        <th scope="row">{{ pelicula.id }}</th>
-                        <td>{{ pelicula.titulo }}</td>
-                        <td>{{ pelicula.director }}</td>
-                        <td>{{ pelicula.genero }}</td>
-                        <td><b>$</b>{{ pelicula.precio_compra }}</td>
-                        <td><b>$</b>{{ pelicula.precio_arriendo }}</td>
-                        <td>{{ pelicula.stock }}</td>
-                        <td>
-                            <a href="/inventario/detalle_pelicula/{{ pelicula.id }}" class="btn btn-info btn-sm">Detalle</a>
-                        </td>
-                        {% if user.is_authenticated and perms.producto.editar_peliculas %}
-                        <td>
-                            <a href="/inventario/editar_pelicula/{{ pelicula.id }}" class="btn btn-warning btn-sm">Editar</a>
-                        </td>
-                        <td>
-                            <a href="/inventario/eliminar_pelicula/{{ pelicula.id }}" class="btn btn-danger btn-sm">Eliminar</a>
-                        </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
     {% if user.is_authenticated and perms.producto.editar_peliculas %}
     <div class="text-center mt-4">
@@ -56,5 +37,6 @@
     </div>
     {% endif %}
 </div>
+
 {% include 'footer.html' %}
 {% endblock %}
